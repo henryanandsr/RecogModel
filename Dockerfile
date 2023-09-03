@@ -1,17 +1,27 @@
-# Use the official Python image
-FROM python:3.9
+# Use the official Python image from the Docker Hub
+FROM python:3.8
 
-# Set the working directory
-WORKDIR /app
+# Install system dependencies (if needed)
+RUN apt-get update && apt-get install -y \
+    libglib2.0-0 \
+    libsm6 \
+    libxrender1 \
+    libxext6
 
-# Copy the current directory contents into the container at /app
-COPY . /app
-
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
-
-# Make port 8080 available to the world outside this container
+# Add metadata to the image to describe that the container is listening on the specified port at runtime.
 EXPOSE 8080
 
-# Run app.py when the container launches
-CMD ["python", "app.py"]
+# Set the working directory in the Docker container
+WORKDIR /app
+
+# Copy the requirements.txt file into the container
+COPY requirements.txt .
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the current directory . in the host to /app in the container
+COPY . /app
+
+# Specify the command to run
+CMD ["python", "main.py"]
