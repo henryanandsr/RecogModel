@@ -17,7 +17,7 @@ def load_model_from_gcs(bucket_name, blob_name):
 
 
 model_bucket_name = "dermatica"
-model_blob_name = "model_last.tflite"
+model_blob_name = "model_final.tflite"
 model = load_model_from_gcs(model_bucket_name, model_blob_name)
 
 @app.route('/predict', methods=['POST'])
