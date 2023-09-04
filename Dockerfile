@@ -11,6 +11,11 @@ WORKDIR /app
 # Copy the requirements file into the container
 COPY requirements.txt requirements.txt
 
+# Install system dependencies for OpenGL and other potential dependencies for TensorFlow and OpenCV
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*  # Clean up to minimize image size
+
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
 
