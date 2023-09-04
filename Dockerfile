@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Set environment variables
-ENV FLASK_APP app.py
+ENV FLASK_APP main.py
 ENV FLASK_RUN_HOST 0.0.0.0
 
 # Create and set the working directory
