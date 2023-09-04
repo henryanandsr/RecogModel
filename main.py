@@ -3,7 +3,6 @@ from google.cloud import storage
 import tensorflow as tf
 from PIL import Image
 import numpy as np
-import cv2
 
 app = Flask(__name__)
 def load_model_from_gcs(bucket_name, blob_name):
@@ -26,7 +25,8 @@ def predict():
         # Get the image file from the request
         file = request.files['file']
         image = Image.open(file).convert('RGB')
-        image = cv2.resize(np.array(image), (224, 224))
+        image = image.resize((224, 224))
+        image = np.array(image)
 
         # Normalize the image
         image = (image / 255.0).astype(np.float32)
